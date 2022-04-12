@@ -1,8 +1,27 @@
-# PgGeneratedColumnSupport
-Short description and motivation.
+# Pg Generated Column Support
+
+This is a backport of the generated column support that was added to
+Rails 7: https://github.com/rails/rails/pull/41856
+
+Generated Columns
+
+NOTE: Generated columns are supported since version 12.0 of PostgreSQL.
 
 ## Usage
-How to use my plugin.
+
+```ruby
+# db/migrate/20131220144913_create_users.rb
+create_table :users do |t|
+  t.string :name
+  t.virtual :name_upcased, type: :string, as: 'upper(name)', stored: true
+end
+# app/models/user.rb
+class User < ApplicationRecord
+end
+# Usage
+user = User.create(name: 'John')
+User.last.name_upcased # => "JOHN"
+```
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -20,9 +39,6 @@ Or install it yourself as:
 ```bash
 $ gem install pg_generated_column_support
 ```
-
-## Contributing
-Contribution directions go here.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

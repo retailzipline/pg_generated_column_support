@@ -1,4 +1,10 @@
 require "pg_generated_column_support/version"
+require "active_record/connection_adapters/postgresql_adapter"
+require "pg_generated_column_support/pg_adapter_ext"
+require "pg_generated_column_support/pg_column_ext"
+require "pg_generated_column_support/pg_schema_creation_ext"
+require "pg_generated_column_support/pg_schema_dumper_ext"
+require "pg_generated_column_support/pg_table_definition_ext"
 
 module PgGeneratedColumnSupport
 end
