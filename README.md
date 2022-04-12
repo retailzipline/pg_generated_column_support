@@ -3,7 +3,13 @@
 This is a backport of the generated column support that was added to
 Rails 7: https://github.com/rails/rails/pull/41856
 
-Generated Columns
+It also includes fixes from two other PRs:
+I also pulled in changes from two other related PRs:
+https://github.com/rails/rails/pull/43263
+https://github.com/rails/rails/pull/44319
+
+Much thanks and appreciation to everyone who worked on the
+generated columns support PRs. :heart::tada:
 
 NOTE: Generated columns are supported since version 12.0 of PostgreSQL.
 
