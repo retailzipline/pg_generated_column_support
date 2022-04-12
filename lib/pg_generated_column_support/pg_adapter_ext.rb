@@ -48,18 +48,24 @@ module PgGeneratedColumnSupport
     private
 
     def new_column_from_field(table_name, field)
-      # ---- Begin Monkey Patch -----
+      # ---- Begin Monkey Patch - https://github.com/rails/rails/pull/41856 -----
       column_name, type, default, notnull, oid, fmod, collation, comment, attgenerated = field
       # ---- End Monkey Patch -------
       type_metadata = fetch_type_metadata(column_name, type, oid.to_i, fmod.to_i)
       default_value = extract_value_from_default(default)
-      default_function = extract_default_function(default_value, default)
+      # ---- Begin Monkey Patch - https://github.com/rails/rails/pull/44319/files -----
+      if attgenerated.present?
+        default_function = default
+      else
+        default_function = extract_default_function(default_value, default)
+      end
+      # ---- End Monkey Patch -------
 
       if match = default_function&.match(/\Anextval\('"?(?<sequence_name>.+_(?<suffix>seq\d*))"?'::regclass\)\z/)
         serial = sequence_name_from_parts(table_name, column_name, match[:suffix]) == match[:sequence_name]
       end
 
-      # ---- Begin Monkey Patch -----
+      # ---- Begin Monkey Patch - https://github.com/rails/rails/pull/41856 -----
       ActiveRecord::ConnectionAdapters::PostgreSQL::Column.new(
         column_name,
         default_value,

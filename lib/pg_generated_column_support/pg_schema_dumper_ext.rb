@@ -4,7 +4,7 @@ module PgGeneratedColumnSupport
       spec = super
       spec[:array] = "true" if column.array?
 
-      # ---- Being Monkey Patch -----
+      # ---- Begin Monkey Patch -----
       if @connection.supports_virtual_columns? && column.virtual?
         spec[:as] = extract_expression_for_virtual_column(column)
         spec[:stored] = true
