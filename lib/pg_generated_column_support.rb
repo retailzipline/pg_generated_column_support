@@ -1,5 +1,7 @@
-require "pg_generated_column_support/version"
+require "active_record"
+require "pg"
 require "active_record/connection_adapters/postgresql_adapter"
+require "pg_generated_column_support/version"
 require "pg_generated_column_support/ar_attribute_methods_ext"
 require "pg_generated_column_support/ar_column_ext"
 require "pg_generated_column_support/pg_adapter_ext"
